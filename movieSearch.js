@@ -9,13 +9,35 @@ form.onsubmit=(e)=>{
     })
 }
 function names(data){
-    // const head=document.createElement("h1")
-    // head.innerHTML=data[0].title;
-    // document.querySelector("#results").append(head);
+    if(data.length===0){
+        const wrong=document.createElement("h1")
+        wrong.innerHTML="Not Found"
+        document.querySelector("#results").append(wrong)
+    }else{
+    const results=document.querySelector("#results");
+    results.innerHTML="";
     data.forEach((movie) => {
+    const movieDiv=document.createElement("div");
+    movieDiv.classList.add("movie")
+
     const image=document.createElement("img")
-    image.src = "https://image.tmdb.org/t/p/original"+movie.poster_path;
-    document.querySelector("#results").append(image);
+    image.src = (movie.poster_path) ? "https://image.tmdb.org/t/p/original"+movie.poster_path : "000000h1.jpg";
+
+    const name=document.createElement("h3")
+    name.innerHTML=titleName(movie.original_title);
+
+
+    movieDiv.append(name);
+    movieDiv.append(image);
+    results.append(movieDiv);
     });
-    
+}
+function titleName(name){
+    if(name.length>30){
+        return name.slice(0,30)="..."
+    }
+    else{
+        return name
+    }
+}
 }
